@@ -1,0 +1,34 @@
+{
+    "name": "RUN_NAME",
+    "n_gpu": 1,
+    "arch": {
+        "type": "vgg16_bn",
+        "args": {
+            "num_classes": 2,
+            "pretrained": true
+        }
+    },
+    "data_loader": {
+        "type": "ImageDataLoader",
+        "args": {
+            "dataset_location": "PATH/TO/DATASET/train_dataset.csv",
+            "root_dir_images": "PATH/TO/IMAGES/",
+            "label_variable": "grade_binary",
+            "path_variable": "dir",
+            "input_shape": [
+                224,
+                224
+            ],
+            "input_channels": 3,
+            "batch_size": 128,
+            "shuffle": false,
+            "validation_split": 0.0,
+            "num_workers": 14,
+            "class_mode": "sparse"
+        }
+    },
+    "loss": "CrossEntropyLoss",
+    "metrics": [
+        "accuracy"
+    ],
+}

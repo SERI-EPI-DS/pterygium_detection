@@ -1,0 +1,89 @@
+{
+    "name": "RUN_NAME",
+    "n_gpu": 1,
+    "arch": {
+        "type": "vgg16_bn",
+        "args": {
+            "num_classes": 2,
+            "pretrained": true
+        }
+    },
+    "data_loader": {
+        "type": "ImageDataLoader",
+        "args": {
+            "dataset_location": "PATH/TO/DATASET/train_dataset.csv",
+            "root_dir_images": "PATH/TO/IMAGES/",
+            "label_variable": "grade_binary",
+            "path_variable": "dir",
+            "input_shape": [
+                224,
+                224
+            ],
+            "input_channels": 3,
+            "batch_size": 64,
+            "shuffle": true,
+            "validation_split": 0.0,
+            "num_workers": 14,
+            "class_mode": "sparse",
+            "horizontal_flip": true,
+            "rotate_degrees": 10,
+            "shear_degrees": 10,
+            "scale_range": [
+                0.8,
+                1.2
+            ],
+            "translate_fraction": [
+                0.2,
+                0.1
+            ]
+        }
+    },
+    "val_loader": {
+        "type": "ImageDataLoader",
+        "args": {
+            "dataset_location": "PATH/TO/DATASET/train_dataset.csv",
+            "root_dir_images": "PATH/TO/IMAGES/",
+            "label_variable": "grade_binary",
+            "path_variable": "dir",
+            "input_shape": [
+                224,
+                224
+            ],
+            "input_channels": 3,
+            "batch_size": 64,
+            "shuffle": false,
+            "validation_split": 0.0,
+            "num_workers": 14,
+            "class_mode": "sparse"
+        }
+    },
+    "optimizer": {
+        "type": "Adam",
+        "args": {
+            "lr": 1e-05,
+            "weight_decay": 0,
+            "amsgrad": true
+        }
+    },
+    "loss": "CrossEntropyLoss",
+    "class_weights":"weighted",
+    "metrics": [
+        "accuracy"
+    ],
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 10,
+            "gamma": 0.2
+        }
+    },
+    "trainer": {
+        "epochs": 100,
+        "save_dir": "saved/",
+        "save_period": 1,
+        "verbosity": 2,
+        "monitor": "min val_loss",
+        "early_stop": 20,
+        "tensorboard": true
+    }
+}
